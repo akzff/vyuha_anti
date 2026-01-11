@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TradeVerse - Goals & Risk Management">
+    <title>Goals & Risk - TradeVerse</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">TRADEVERSE</div>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">DASHBOARD</a>
+                <a href="journal.html" class="nav-link">JOURNAL</a>
+                <a href="analytics.html" class="nav-link">ANALYTICS</a>
+                <a href="profile.html" class="nav-link">PROFILE</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn" onclick="window.location.href='strategies.html'">Strategies</button>
+            <button class="tab-btn active">Goals & Risk</button>
+            <button class="tab-btn" onclick="window.location.href='tags.html'">Tags</button>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="grid grid-2" style="margin-top: var(--spacing-xl);">
+
+            <!-- Profit Goals Section -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="card-icon">🎯</span>
+                        Profit Goals
+                    </h2>
+                </div>
+
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: var(--spacing-lg);">
+                    Set your daily, weekly, and monthly profit targets as percentage of returns.
+                </p>
+
+                <!-- Daily Target -->
+                <div class="settings-row">
+                    <div class="settings-label">
+                        <div style="font-weight: 600; margin-bottom: 4px;">Daily Target (%)</div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">1.5</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <!-- Weekly Target -->
+                <div class="settings-row">
+                    <div class="settings-label">
+                        <div style="font-weight: 600; margin-bottom: 4px;">Weekly Target (%)</div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">7</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <!-- Monthly Target -->
+                <div class="settings-row">
+                    <div class="settings-label">
+                        <div style="font-weight: 600; margin-bottom: 4px;">Monthly Target (%)</div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">15</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <button class="btn btn-primary" style="margin-top: var(--spacing-lg);">Save Goals</button>
+            </div>
+
+            <!-- Risk Management Section -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="card-icon">🛡️</span>
+                        Risk Management
+                    </h2>
+                </div>
+
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: var(--spacing-lg);">
+                    Define risk limits to protect profits. Trade entry will be locked if a limit is breached. Live for
+                    no revenge entries.
+                </p>
+
+                <!-- Grid for Risk Settings -->
+                <div class="grid grid-2" style="margin-bottom: var(--spacing-lg);">
+                    <div>
+                        <label class="input-label">Daily DD (%)</label>
+                        <div class="input-group">
+                            <input type="number" class="input" value="5" min="0" max="100">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="input-label">Weekly DD (%)</label>
+                        <div class="input-group">
+                            <input type="number" class="input" value="10" min="0" max="100">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-2" style="margin-bottom: var(--spacing-lg);">
+                    <div>
+                        <label class="input-label">Monthly DD (%)</label>
+                        <div class="input-group">
+                            <input type="number" class="input" value="20" min="0" max="100">
+                        </div>
+                    </div>
+                    <div>
+                        <!-- Empty for spacing -->
+                    </div>
+                </div>
+
+                <div class="grid grid-2" style="margin-bottom: var(--spacing-lg);">
+                    <div>
+                        <label class="input-label">Max Trades / Day</label>
+                        <div class="input-group">
+                            <input type="number" class="input" value="0" min="0">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="input-label">Max Trades / Week</label>
+                        <div class="input-group">
+                            <input type="number" class="input" value="0" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary">Save Risk Limits</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Data Layer Scripts -->
+    <script src="constants.js"></script>
+    <script src="calculations.js"></script>
+    <script src="data-manager.js"></script>
+
+    <script>
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            loadGoalsAndSettings();
+        });
+
+        function loadGoalsAndSettings() {
+            const profitGoals = dataManager.getProfitGoals();
+            const riskSettings = dataManager.getRiskSettings();
+
+            // Load Profit Goals
+            const settingsRows = document.querySelectorAll('.settings-row');
+
+            // Daily
+            settingsRows[0].querySelector('.settings-label div:last-child').textContent = profitGoals.daily.target;
+            settingsRows[0].querySelector('input[type="checkbox"]').checked = profitGoals.daily.active;
+
+            // Weekly
+            settingsRows[1].querySelector('.settings-label div:last-child').textContent = profitGoals.weekly.target;
+            settingsRows[1].querySelector('input[type="checkbox"]').checked = profitGoals.weekly.active;
+
+            // Monthly
+            settingsRows[2].querySelector('.settings-label div:last-child').textContent = profitGoals.monthly.target;
+            settingsRows[2].querySelector('input[type="checkbox"]').checked = profitGoals.monthly.active;
+
+            // Load Risk Settings
+            const inputs = document.querySelectorAll('input[type="number"]');
+            inputs[0].value = riskSettings.dailyDD;
+            inputs[1].value = riskSettings.weeklyDD;
+            inputs[2].value = riskSettings.monthlyDD;
+            inputs[3].value = riskSettings.maxTradesDay;
+            inputs[4].value = riskSettings.maxTradesWeek;
+        }
+
+        // Save Profit Goals
+        document.querySelector('.btn.btn-primary').addEventListener('click', function () {
+            const settingsRows = document.querySelectorAll('.settings-row');
+
+            const profitGoals = {
+                daily: {
+                    target: parseFloat(settingsRows[0].querySelector('.settings-label div:last-child').textContent),
+                    active: settingsRows[0].querySelector('input[type="checkbox"]').checked
+                },
+                weekly: {
+                    target: parseFloat(settingsRows[1].querySelector('.settings-label div:last-child').textContent),
+                    active: settingsRows[1].querySelector('input[type="checkbox"]').checked
+                },
+                monthly: {
+                    target: parseFloat(settingsRows[2].querySelector('.settings-label div:last-child').textContent),
+                    active: settingsRows[2].querySelector('input[type="checkbox"]').checked
+                }
+            };
+
+            dataManager.saveProfitGoals(profitGoals);
+            alert('✅ Profit goals saved successfully!');
+        });
+
+        // Save Risk Limits
+        document.querySelectorAll('.btn.btn-primary')[1].addEventListener('click', function () {
+            const inputs = document.querySelectorAll('input[type="number"]');
+
+            const riskSettings = {
+                dailyDD: parseFloat(inputs[0].value),
+                weeklyDD: parseFloat(inputs[1].value),
+                monthlyDD: parseFloat(inputs[2].value),
+                maxTradesDay: parseInt(inputs[3].value),
+                maxTradesWeek: parseInt(inputs[4].value),
+                maxRiskPerTrade: 1.0 // Keep existing value
+            };
+
+            dataManager.saveRiskSettings(riskSettings);
+            alert('✅ Risk limits saved successfully!');
+        });
+
+        // Toggle functionality
+        const toggles = document.querySelectorAll('.toggle-switch input');
+        toggles.forEach(toggle => {
+            toggle.addEventListener('change', function () {
+                console.log('Toggle changed:', this.checked);
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TradeVerse - Tag Manager">
+    <title>Tag Manager - TradeVerse</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">TRADEVERSE</div>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">DASHBOARD</a>
+                <a href="journal.html" class="nav-link">JOURNAL</a>
+                <a href="analytics.html" class="nav-link">ANALYTICS</a>
+                <a href="profile.html" class="nav-link">PROFILE</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn" onclick="window.location.href='strategies.html'">Strategies</button>
+            <button class="tab-btn" onclick="window.location.href='goals.html'">Goals & Risk</button>
+            <button class="tab-btn active">Tags</button>
+        </div>
+
+        <!-- Tag Manager -->
+        <div class="card" style="margin-top: var(--spacing-xl);">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <span class="card-icon">🏷️</span>
+                    Tag Manager
+                </h2>
+            </div>
+
+            <!-- Tag Category Tabs -->
+            <div class="tag-category-tabs">
+                <button class="tag-category-tab active" data-category="entry">
+                    <span class="tab-icon">🎯</span>
+                    Entry Reasons
+                </button>
+                <button class="tag-category-tab" data-category="exit">
+                    <span class="tab-icon">🚪</span>
+                    Exit Reasons
+                </button>
+                <button class="tag-category-tab" data-category="mental">
+                    <span class="tab-icon">🧠</span>
+                    Mental States
+                </button>
+                <button class="tag-category-tab" data-category="general">
+                    <span class="tab-icon">📌</span>
+                    General Tags
+                </button>
+            </div>
+
+            <!-- Tag List Container -->
+            <div class="tag-list-container" style="margin-top: var(--spacing-xl);">
+
+                <!-- Entry Reasons Tags -->
+                <div class="tag-category-content" data-category="entry">
+                    <div class="tag-item">
+                        <div class="tag-item-content">
+                            <span class="tag-badge entry-tag">Breakout</span>
+                        </div>
+                        <div class="tag-item-actions">
+                            <button class="icon-btn" title="Edit">✏️</button>
+                            <button class="icon-btn" title="Delete">🗑️</button>
+                        </div>
+                    </div>
+
+                    <div class="tag-item">
+                        <div class="tag-item-content">
+                            <span class="tag-badge entry-tag">Pullback</span>
+                        </div>
+                        <div class="tag-item-actions">
+                            <button class="icon-btn" title="Edit">✏️</button>
+                            <button class="icon-btn" title="Delete">🗑️</button>
+                        </div>
+                    </div>
+
+                    <div class="tag-add-container">
+                        <input type="text" class="input" placeholder="Add new entry tag..." id="entry-tag-input">
+                        <button class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+
+                <!-- Exit Reasons Tags (hidden by default) -->
+                <div class="tag-category-content" data-category="exit" style="display: none;">
+                    <p style="color: var(--text-secondary); text-align: center; padding: var(--spacing-xl);">
+                        No exit reason tags yet. Add your first one below.
+                    </p>
+                    <div class="tag-add-container">
+                        <input type="text" class="input" placeholder="Add new exit tag..." id="exit-tag-input">
+                        <button class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+
+                <!-- Mental States Tags (hidden by default) -->
+                <div class="tag-category-content" data-category="mental" style="display: none;">
+                    <p style="color: var(--text-secondary); text-align: center; padding: var(--spacing-xl);">
+                        No mental state tags yet. Add your first one below.
+                    </p>
+                    <div class="tag-add-container">
+                        <input type="text" class="input" placeholder="Add new mental state tag..."
+                            id="mental-tag-input">
+                        <button class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+
+                <!-- General Tags (hidden by default) -->
+                <div class="tag-category-content" data-category="general" style="display: none;">
+                    <p style="color: var(--text-secondary); text-align: center; padding: var(--spacing-xl);">
+                        No general tags yet. Add your first one below.
+                    </p>
+                    <div class="tag-add-container">
+                        <input type="text" class="input" placeholder="Add new general tag..." id="general-tag-input">
+                        <button class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <script src="tags.js"></script>
+</body>
+
+</html>

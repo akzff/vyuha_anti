@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="TradeVerse - Advanced Trading Analytics Dashboard with real-time insights, mission control, and performance tracking.">
+  <title>TradeVerse - Trading Analytics Dashboard</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">TRADEVERSE</div>
+      <nav class="nav">
+        <a href="#dashboard" class="nav-link active">DASHBOARD</a>
+        <a href="#journal" class="nav-link">JOURNAL</a>
+        <a href="#analytics" class="nav-link">ANALYTICS</a>
+        <a href="#profile" class="nav-link">PROFILE</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <!-- Navigation Cards -->
+    <div class="nav-cards">
+      <a href="#new-trade" class="nav-card">
+        <div class="nav-card-icon purple">📊</div>
+        <div class="nav-card-title">New Trade</div>
+        <div class="nav-card-desc">Log a new entry instantly</div>
+      </a>
+      <a href="#journal" class="nav-card">
+        <div class="nav-card-icon cyan">📖</div>
+        <div class="nav-card-title">Journal</div>
+        <div class="nav-card-desc">Reflect on your psychology</div>
+      </a>
+      <a href="#playbook" class="nav-card">
+        <div class="nav-card-icon blue">🎯</div>
+        <div class="nav-card-title">Playbook</div>
+        <div class="nav-card-desc">Your edge & setups</div>
+      </a>
+      <a href="#trade-log" class="nav-card">
+        <div class="nav-card-icon orange">📁</div>
+        <div class="nav-card-title">Trade Log</div>
+        <div class="nav-card-desc">Detailed history & data</div>
+      </a>
+    </div>
+
+    <!-- Open Positions Section -->
+    <section class="card" style="margin-bottom: var(--spacing-xl);">
+      <div class="card-header">
+        <h2 class="card-title">
+          <span class="card-icon">💼</span>
+          Open Positions
+        </h2>
+        <span class="badge active">3 Active</span>
+      </div>
+
+      <div id="positions-container">
+        <!-- Positions will be rendered here by JavaScript -->
+      </div>
+    </section>
+
+    <!-- Dashboard Grid -->
+    <div class="grid grid-2" style="margin-bottom: var(--spacing-xl);">
+
+      <!-- Mission Control -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span class="card-icon">🎯</span>
+            Mission Control
+          </h3>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg);">
+          <!-- Daily Habits -->
+          <div>
+            <h4
+              style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: var(--spacing-sm); text-transform: uppercase; letter-spacing: 0.5px;">
+              Daily Habits</h4>
+            <ul class="checklist" id="daily-habits">
+              <li class="checklist-item">
+                <div class="checkbox" data-task="habit-1"></div>
+                <span class="checklist-label">Market Analysis (Pre-market)</span>
+              </li>
+              <li class="checklist-item">
+                <div class="checkbox" data-task="habit-2"></div>
+                <span class="checklist-label">Review Trading Plan</span>
+              </li>
+              <li class="checklist-item">
+                <div class="checkbox" data-task="habit-3"></div>
+                <span class="checklist-label">Followed Trading Plan</span>
+              </li>
+              <li class="checklist-item">
+                <div class="checkbox" data-task="habit-4"></div>
+                <span class="checklist-label">No Emotional Decisions</span>
+              </li>
+              <li class="checklist-item">
+                <div class="checkbox" data-task="habit-5"></div>
+                <span class="checklist-label">Journal All Trades</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Focus List -->
+          <div>
+            <h4
+              style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: var(--spacing-sm); text-transform: uppercase; letter-spacing: 0.5px;">
+              Focus List</h4>
+            <div class="focus-item">
+              <span class="focus-indicator active"></span>
+              <span class="focus-text">Backtest divergence strat</span>
+            </div>
+            <div class="focus-item">
+              <span class="focus-indicator active"></span>
+              <span class="focus-text">Review monthly P/L</span>
+            </div>
+            <div style="margin-top: var(--spacing-md);">
+              <input type="text" class="input" placeholder="Add task..." id="focus-input">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profit Goals -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span class="card-icon">🎯</span>
+            Profit Goals
+          </h3>
+        </div>
+
+        <div class="progress-section">
+          <div class="progress-header">
+            <span class="progress-label">Daily Target</span>
+            <span class="progress-value">
+              <span style="color: var(--text-muted);">PROGRESS</span>
+              <strong style="margin-left: var(--spacing-xs); color: var(--purple-primary);">12.5%</strong>
+            </span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar" style="width: 12.5%"></div>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; margin-top: var(--spacing-xs); font-size: 0.8rem; color: var(--text-muted);">
+            <span>$0</span>
+            <span>$250</span>
+          </div>
+        </div>
+
+        <div class="progress-section">
+          <div class="progress-header">
+            <span class="progress-label">Weekly Target</span>
+            <span class="progress-value">
+              <span style="color: var(--text-muted);">PROGRESS</span>
+              <strong style="margin-left: var(--spacing-xs); color: var(--purple-primary);">45.0%</strong>
+            </span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar" style="width: 45%"></div>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; margin-top: var(--spacing-xs); font-size: 0.8rem; color: var(--text-muted);">
+            <span>$0</span>
+            <span>$1,000</span>
+          </div>
+        </div>
+
+        <div class="progress-section">
+          <div class="progress-header">
+            <span class="progress-label">Monthly Target</span>
+            <span class="progress-value">
+              <span style="color: var(--text-muted);">PROGRESS</span>
+              <strong style="margin-left: var(--spacing-xs); color: var(--purple-primary);">68.0%</strong>
+            </span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar" style="width: 68%"></div>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; margin-top: var(--spacing-xs); font-size: 0.8rem; color: var(--text-muted);">
+            <span>$0</span>
+            <span>$5,000</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Second Row -->
+    <div class="grid grid-2" style="margin-bottom: var(--spacing-xl);">
+
+      <!-- Recent Activity -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span class="card-icon">📈</span>
+            Recent Activity
+          </h3>
+          <a href="#all-activity" class="view-all">VIEW ALL</a>
+        </div>
+
+        <div id="activity-container">
+          <!-- Activity items will be rendered here -->
+        </div>
+      </div>
+
+      <!-- Risk Status -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span class="card-icon">🛡️</span>
+            Risk Status
+          </h3>
+        </div>
+
+        <div style="margin-bottom: var(--spacing-lg);">
+          <h4
+            style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: var(--spacing-sm); text-transform: uppercase; letter-spacing: 0.5px;">
+            Risk per Trade</h4>
+          <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+            <div class="risk-icon safe">✓</div>
+            <div style="font-size: 1.5rem; font-weight: 700; font-family: var(--font-mono);">1.0% / $100</div>
+          </div>
+        </div>
+
+        <div>
+          <h4
+            style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: var(--spacing-md); text-transform: uppercase; letter-spacing: 0.5px;">
+            Drawdown Limits</h4>
+
+          <div class="progress-section">
+            <div class="progress-header">
+              <span class="progress-label">Daily DD</span>
+              <span class="progress-value">0.05% / 5%</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar"
+                style="width: 1%; background: linear-gradient(90deg, var(--green-primary), var(--green-light));"></div>
+            </div>
+          </div>
+
+          <div class="progress-section">
+            <div class="progress-header">
+              <span class="progress-label">Max DD</span>
+              <span class="progress-value">0.08% / 10%</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar"
+                style="width: 0.8%; background: linear-gradient(90deg, var(--green-primary), var(--green-light));">
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: var(--spacing-lg);">
+            <h4
+              style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: var(--spacing-sm); text-transform: uppercase; letter-spacing: 0.5px;">
+              Trade Frequency</h4>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="color: var(--text-secondary);">Daily / Weekly</span>
+              <button class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.375rem 0.75rem;">OPTIMAL</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytics Section -->
+    <section>
+      <h2 style="margin-bottom: var(--spacing-lg); font-size: 1.75rem;">Deep Edge Analysis</h2>
+      <p style="color: var(--text-secondary); margin-bottom: var(--spacing-xl); text-align: center;">Powered by Gemini 3
+        Thinking Mode</p>
+
+      <div class="grid grid-2" style="margin-bottom: var(--spacing-xl);">
+        <!-- Cumulative P&L Chart -->
+        <div class="chart-wrapper">
+          <h3 style="margin-bottom: var(--spacing-md); font-size: 1.125rem;">Cumulative P&L Over Time</h3>
+          <div class="chart-container">
+            <canvas id="pnl-chart"></canvas>
+          </div>
+        </div>
+
+        <!-- Performance Chart -->
+        <div class="chart-wrapper">
+          <h3 style="margin-bottom: var(--spacing-md); font-size: 1.125rem;">Performance Over Time</h3>
+          <div class="chart-container">
+            <canvas id="performance-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-3" style="margin-bottom: var(--spacing-xl);">
+        <div class="chart-wrapper">
+          <h3 style="margin-bottom: var(--spacing-md); font-size: 1rem;">Win-Rate by Duration</h3>
+          <div style="padding: var(--spacing-lg) 0;">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
+              <span style="color: var(--text-secondary);">Intraday</span>
+              <span style="color: var(--text-muted);">0%</span>
+            </div>
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
+              <span style="color: var(--text-secondary);">Multiday</span>
+              <div
+                style="display: flex; align-items: center; gap: var(--spacing-md); flex: 1; justify-content: flex-end;">
+                <div
+                  style="width: 60%; height: 0.5rem; background: linear-gradient(90deg, var(--purple-primary), var(--purple-light)); border-radius: var(--radius-lg);">
+                </div>
+                <span style="font-weight: 700; color: var(--purple-primary);">100%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-wrapper">
+          <h3 style="margin-bottom: var(--spacing-md); font-size: 1rem;">Average Hold Time</h3>
+          <div style="padding: var(--spacing-lg) 0;">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
+              <span style="color: var(--text-secondary);">Wins</span>
+              <span style="font-weight: 700; color: var(--green-primary);">1d 4h</span>
+            </div>
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
+              <span style="color: var(--text-secondary);">Losses</span>
+              <span style="font-weight: 700; color: var(--red-primary);">45m 0s</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-wrapper">
+          <h3 style="margin-bottom: var(--spacing-md); font-size: 1rem;">Position Type</h3>
+          <div style="padding: var(--spacing-lg) 0;">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
+              <span style="color: var(--text-secondary);">Longs</span>
+              <div
+                style="display: flex; align-items: center; gap: var(--spacing-md); flex: 1; justify-content: flex-end;">
+                <div
+                  style="width: 70%; height: 0.5rem; background: linear-gradient(90deg, var(--purple-primary), var(--purple-light)); border-radius: var(--radius-lg);">
+                </div>
+                <span style="font-weight: 700; color: var(--purple-primary);">1d 4h</span>
+              </div>
+            </div>
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
+              <span style="color: var(--text-secondary);">Shorts</span>
+              <div
+                style="display: flex; align-items: center; gap: var(--spacing-md); flex: 1; justify-content: flex-end;">
+                <div
+                  style="width: 30%; height: 0.5rem; background: linear-gradient(90deg, var(--cyan-primary), var(--cyan-light)); border-radius: var(--radius-lg);">
+                </div>
+                <span style="font-weight: 700; color: var(--cyan-primary);">45m 8s</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day Analysis Charts -->
+      <div class="grid grid-2">
+        <div class="chart-wrapper">
+          <h3 style="margin-bottom: var(--spacing-md); font-size: 1.125rem;">Day of Week - PNL</h3>
+          <div class="chart-container" style="height: 250px;">
+            <canvas id="day-pnl-chart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-wrapper">
+          <h3 style="margin-bottom: var(--spacing-md); font-size: 1.125rem;">Day of Week - Activity</h3>
+          <div class="chart-container" style="height: 250px;">
+            <canvas id="day-activity-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section
+      style="margin-top: var(--spacing-2xl); margin-bottom: var(--spacing-2xl); text-align: center; padding: var(--spacing-2xl); background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1)); border-radius: var(--radius-xl); border: 1px solid var(--border-color);">
+      <h2 style="font-size: 2rem; margin-bottom: var(--spacing-md);">Deep Edge Analysis</h2>
+      <p
+        style="color: var(--text-secondary); margin-bottom: var(--spacing-xl); max-width: 600px; margin-left: auto; margin-right: auto;">
+        Powered by Gemini 3 Thinking Mode</p>
+      <button class="btn btn-primary" style="font-size: 1rem; padding: var(--spacing-md) var(--spacing-2xl);">INITIATE
+        SYNAPSE</button>
+    </section>
+
+  </main>
+
+  <!-- Core Data Layer Scripts -->
+  <script src="constants.js"></script>
+  <script src="calculations.js"></script>
+  <script src="data-manager.js"></script>
+  <script src="trade-form.js"></script>
+
+  <!-- Main Dashboard Script -->
+  <script src="script.js"></script>
+</body>
+
+</html>

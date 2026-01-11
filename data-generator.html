@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Data Generator - TradeVerse</title>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        .generator-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .action-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-lg);
+            transition: all 0.3s ease;
+        }
+        
+        .action-card:hover {
+            border-color: var(--purple-primary);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .action-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .action-icon {
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-lg);
+            font-size: 1.5rem;
+        }
+        
+        .action-icon.purple {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--purple-primary);
+        }
+        
+        .action-icon.green {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--green-primary);
+        }
+        
+        .action-icon.red {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--red-primary);
+        }
+        
+        .action-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .action-description {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+        }
+        
+        .input-group {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .input-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .input-number {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .input-number:focus {
+            outline: none;
+            border-color: var(--purple-primary);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+        
+        .btn-action {
+            width: 100%;
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .btn-action.purple {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            color: white;
+        }
+        
+        .btn-action.green {
+            background: linear-gradient(135deg, var(--green-primary), var(--green-light));
+            color: white;
+        }
+        
+        .btn-action.red {
+            background: linear-gradient(135deg, var(--red-primary), var(--red-light));
+            color: white;
+        }
+        
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(139, 92, 246, 0.3);
+        }
+        
+        .btn-action:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .stats-display {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        
+        .alert {
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-top: var(--spacing-md);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .alert.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--green-primary);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .alert.info {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--purple-primary);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">TRADEVERSE</div>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="journal.html" class="nav-link">Journal</a>
+                <a href="analytics.html" class="nav-link">Analytics</a>
+                <a href="habits.html" class="nav-link">Habits</a>
+                <a href="tags.html" class="nav-link">Tags</a>
+                <a href="goals.html" class="nav-link">Goals</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container" style="padding-top: var(--spacing-xl);">
+        
+        <div class="generator-container">
+            
+            <!-- Page Header -->
+            <div style="margin-bottom: var(--spacing-2xl);">
+                <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-sm);">
+                    <div style="width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; 
+                      background: rgba(139, 92, 246, 0.2); border-radius: var(--radius-lg);">
+                        <i class="fa-solid fa-database" style="color: var(--purple-primary); font-size: 1.25rem;"></i>
+                    </div>
+                    <h1 style="font-size: 2rem; font-weight: 700;">
+                        Sample Data <span style="color: var(--purple-primary);">Generator</span>
+                    </h1>
+                </div>
+                <p style="color: var(--text-secondary); margin-left: 3.5rem;">
+                    Generate realistic trading data to test and demonstrate the analytics dashboard.
+                </p>
+            </div>
+
+            <!-- Generate Data Card -->
+            <div class="action-card">
+                <div class="action-header">
+                    <div class="action-icon purple">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <div>
+                        <div class="action-title">Generate Sample Trades</div>
+                    </div>
+                </div>
+                
+                <p class="action-description">
+                    Create realistic trading data with a 55% win rate across multiple symbols and strategies. 
+                    The generator includes BTC, ETH, SOL, stocks, and forex pairs with proper P&L calculations.
+                </p>
+                
+                <div class="input-group">
+                    <label class="input-label" for="trade-count">
+                        <i class="fa-solid fa-hashtag"></i> Number of Trades
+                    </label>
+                    <input 
+                        type="number" 
+                        id="trade-count" 
+                        class="input-number" 
+                        value="50" 
+                        min="1" 
+                        max="500"
+                        placeholder="Enter number of trades (1-500)"
+                    >
+                </div>
+                
+                <button id="generate-btn" class="btn-action purple">
+                    <i class="fa-solid fa-rocket"></i>
+                    Generate & View Analytics
+                </button>
+                
+                <div id="generate-stats" class="stats-display" style="display: none;"></div>
+                <div id="generate-alert" style="display: none;"></div>
+            </div>
+
+            <!-- View Current Data Card -->
+            <div class="action-card">
+                <div class="action-header">
+                    <div class="action-icon green">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <div class="action-title">View Current Data</div>
+                    </div>
+                </div>
+                
+                <p class="action-description">
+                    Check what trades are currently stored in your local database.
+                </p>
+                
+                <button id="view-btn" class="btn-action green">
+                    <i class="fa-solid fa-eye"></i>
+                    View Stored Trades
+                </button>
+                
+                <div id="view-stats" class="stats-display" style="display: none;"></div>
+            </div>
+
+            <!-- Clear Data Card -->
+            <div class="action-card">
+                <div class="action-header">
+                    <div class="action-icon red">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </div>
+                    <div>
+                        <div class="action-title">Clear All Data</div>
+                    </div>
+                </div>
+                
+                <p class="action-description">
+                    Remove all trades from local storage. This action cannot be undone.
+                </p>
+                
+                <button id="clear-btn" class="btn-action red">
+                    <i class="fa-solid fa-warning"></i>
+                    Clear All Trades
+                </button>
+                
+                <div id="clear-alert" style="display: none;"></div>
+            </div>
+
+            <!-- Info Alert -->
+            <div class="alert info">
+                <i class="fa-solid fa-info-circle"></i>
+                <strong>Note:</strong> All data is stored locally in your browser's localStorage. 
+                No data is sent to any server.
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="sample-data-generator.js"></script>
+    
+    <script>
+        // Button handlers
+        document.getElementById('generate-btn').addEventListener('click', () => {
+            const count = parseInt(document.getElementById('trade-count').value) || 50;
+            const btn = document.getElementById('generate-btn');
+            const statsDiv = document.getElementById('generate-stats');
+            const alertDiv = document.getElementById('generate-alert');
+            
+            // Disable button
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Generating...';
+            
+            // Clear previous results
+            statsDiv.innerHTML = '';
+            alertDiv.innerHTML = '';
+            alertDiv.style.display = 'none';
+            
+            setTimeout(() => {
+                // Generate data
+                const generator = new SampleDataGenerator();
+                const trades = generator.generateTrades(count);
+                
+                // Display statistics
+                const wins = trades.filter(t => t.pnl > 0).length;
+                const losses = trades.filter(t => t.pnl <= 0).length;
+                const totalPnl = trades.reduce((sum, t) => sum + t.pnl, 0);
+                const winRate = (wins / trades.length) * 100;
+                
+                let output = '📈 GENERATED TRADES SUMMARY\n';
+                output += '='.repeat(50) + '\n';
+                output += `Total Trades: ${trades.length}\n`;
+                output += `Winning Trades: ${wins}\n`;
+                output += `Losing Trades: ${losses}\n`;
+                output += `Win Rate: ${winRate.toFixed(1)}%\n`;
+                output += `Total P&L: $${totalPnl.toFixed(2)}\n`;
+                output += `Average P&L: $${(totalPnl / trades.length).toFixed(2)}\n`;
+                output += '='.repeat(50) + '\n\n';
+                
+                // Symbol breakdown
+                const symbolStats = {};
+                trades.forEach(t => {
+                    if (!symbolStats[t.symbol]) symbolStats[t.symbol] = { count: 0, pnl: 0 };
+                    symbolStats[t.symbol].count++;
+                    symbolStats[t.symbol].pnl += t.pnl;
+                });
+                
+                output += '💹 BY SYMBOL:\n';
+                Object.entries(symbolStats)
+                    .sort((a, b) => b[1].pnl - a[1].pnl)
+                    .forEach(([symbol, stats]) => {
+                        output += `  ${symbol}: ${stats.count} trades, $${stats.pnl.toFixed(2)}\n`;
+                    });
+                
+                statsDiv.textContent = output;
+                statsDiv.style.display = 'block';
+                
+                // Save to localStorage
+                generator.addToLocalStorage(trades);
+                
+                // Show success message
+                alertDiv.className = 'alert success';
+                alertDiv.innerHTML = `
+                    <i class="fa-solid fa-check-circle"></i>
+                    <strong>Success!</strong> Generated ${count} trades. 
+                    <a href="analytics.html" style="color: var(--green-light); text-decoration: underline;">
+                        Click here to view analytics
+                    </a>
+                `;
+                alertDiv.style.display = 'block';
+                
+                // Re-enable button
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-rocket"></i> Generate & View Analytics';
+            }, 500);
+        });
+        
+        document.getElementById('view-btn').addEventListener('click', () => {
+            const statsDiv = document.getElementById('view-stats');
+            const btn = document.getElementById('view-btn');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Loading...';
+            
+            setTimeout(() => {
+                const stored = localStorage.getItem('trades');
+                
+                if (!stored) {
+                    statsDiv.textContent = '📊 No trades found in storage.\n\nGenerate some sample data to get started!';
+                } else {
+                    const trades = JSON.parse(stored);
+                    const wins = trades.filter(t => t.pnl > 0).length;
+                    const losses = trades.filter(t => t.pnl <= 0).length;
+                    const totalPnl = trades.reduce((sum, t) => sum + (t.pnl || 0), 0);
+                    const winRate = (wins / trades.length) * 100;
+                    
+                    let output = '📊 CURRENT STORED TRADES\n';
+                    output += '='.repeat(50) + '\n';
+                    output += `Total Trades: ${trades.length}\n`;
+                    output += `Winning Trades: ${wins}\n`;
+                    output += `Losing Trades: ${losses}\n`;
+                    output += `Win Rate: ${winRate.toFixed(1)}%\n`;
+                    output += `Total P&L: $${totalPnl.toFixed(2)}\n`;
+                    output += '='.repeat(50);
+                    
+                    statsDiv.textContent = output;
+                }
+                
+                statsDiv.style.display = 'block';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-eye"></i> View Stored Trades';
+            }, 300);
+        });
+        
+        document.getElementById('clear-btn').addEventListener('click', () => {
+            if (confirm('⚠️ Are you sure you want to delete ALL trades?\n\nThis action cannot be undone!')) {
+                const alertDiv = document.getElementById('clear-alert');
+                const generator = new SampleDataGenerator();
+                generator.clearAllTrades();
+                
+                alertDiv.className = 'alert success';
+                alertDiv.innerHTML = '<i class="fa-solid fa-check-circle"></i> <strong>Cleared!</strong> All trades have been removed.';
+                alertDiv.style.display = 'block';
+                
+                // Hide stats if visible
+                document.getElementById('view-stats').style.display = 'none';
+                document.getElementById('generate-stats').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

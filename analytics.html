@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - TradeVerse</title>
+    <meta name="description" content="Advanced analytics and performance tracking for your trading history">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Chart.js for charting -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">TRADEVERSE</div>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="journal.html" class="nav-link">Journal</a>
+                <a href="analytics.html" class="nav-link active">Analytics</a>
+                <a href="habits.html" class="nav-link">Habits</a>
+                <a href="tags.html" class="nav-link">Tags</a>
+                <a href="goals.html" class="nav-link">Goals</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container" style="padding-top: var(--spacing-xl);">
+
+        <!-- Page Header -->
+        <div style="margin-bottom: var(--spacing-2xl);">
+            <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-sm);">
+                <div style="width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; 
+          background: rgba(139, 92, 246, 0.2); border-radius: var(--radius-lg);">
+                    <i class="fa-solid fa-chart-simple" style="color: var(--purple-primary); font-size: 1.25rem;"></i>
+                </div>
+                <h1 style="font-size: 2rem; font-weight: 700;">
+                    Performance <span style="color: var(--purple-primary);">Analytics</span>
+                </h1>
+            </div>
+            <p style="color: var(--text-secondary); margin-left: 3.5rem;">
+                Review your performance and trade history with deep insights.
+            </p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div
+            style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-xl); flex-wrap: wrap; gap: var(--spacing-md);">
+            <div class="analytics-tabs">
+                <button class="analytics-tab active" data-tab="analysis">
+                    <i class="fa-solid fa-chart-line"></i> Analysis
+                </button>
+                <button class="analytics-tab" data-tab="log">
+                    <i class="fa-solid fa-list"></i> Log
+                </button>
+                <button class="analytics-tab" data-tab="calendar">
+                    <i class="fa-regular fa-calendar"></i> Calendar
+                </button>
+                <button class="analytics-tab" data-tab="deep-dive">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i> Deep Dive
+                </button>
+            </div>
+
+            <div style="display: flex; gap: var(--spacing-sm);">
+                <button class="btn btn-secondary" style="font-size: 0.75rem;">
+                    <i class="fa-solid fa-file-import"></i> Import
+                </button>
+                <button class="btn btn-secondary" style="font-size: 0.75rem;">
+                    <i class="fa-solid fa-download"></i> Export
+                </button>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div id="filter-bar" class="filter-bar">
+            <button id="date-filter-btn" class="filter-btn">
+                <i class="fa-regular fa-calendar"></i>
+                <span id="date-filter-label">Lifetime</span>
+                <i class="fa-solid fa-chevron-down" style="font-size: 0.625rem; margin-left: auto;"></i>
+            </button>
+
+            <select id="symbol-filter" class="filter-select">
+                <option value="All">All Symbols</option>
+            </select>
+
+            <select id="strategy-filter" class="filter-select">
+                <option value="All">All Strategies</option>
+            </select>
+
+            <select id="side-filter" class="filter-select">
+                <option value="All">All Sides</option>
+                <option value="LONG">Long</option>
+                <option value="SHORT">Short</option>
+            </select>
+
+            <button id="reset-filters-btn" class="btn-reset-filters">
+                <i class="fa-solid fa-rotate-left"></i> Reset
+            </button>
+        </div>
+
+        <!-- Tab Content Containers -->
+        <div id="tab-content">
+            <!-- ANALYSIS TAB -->
+            <div id="analysis-content" class="tab-content active">
+                <!-- Cumulative P&L Chart -->
+                <div class="card" style="margin-bottom: var(--spacing-xl);">
+                    <div class="card-header">
+                        <h3 class="card-title"
+                            style="border-left: 4px solid var(--purple-primary); padding-left: var(--spacing-md);">
+                            Cumulative P&L Over Time
+                        </h3>
+                    </div>
+                    <div class="chart-container" style="height: 320px;">
+                        <canvas id="cumulative-pnl-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Performance Metrics Grid -->
+                <div class="card" style="margin-bottom: var(--spacing-xl);">
+                    <div class="card-header">
+                        <h3 class="card-title"
+                            style="border-left: 4px solid var(--purple-primary); padding-left: var(--spacing-md);">
+                            Performance Edge
+                        </h3>
+                    </div>
+
+                    <!-- Top Row KPIs -->
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-lg); margin-bottom: var(--spacing-xl);">
+                        <div class="stat-card">
+                            <div class="stat-label">Total Trades</div>
+                            <div class="stat-value" id="total-trades">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Win Rate</div>
+                            <div class="stat-value stat-value-positive" id="win-rate">0%</div>
+                            <div id="win-rate-bar" class="progress-bar-container"
+                                style="margin-top: var(--spacing-sm);">
+                                <div class="progress-bar" id="win-rate-progress"
+                                    style="width: 0%; background: linear-gradient(90deg, var(--green-primary), var(--green-light));">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Profit Factor</div>
+                            <div class="stat-value" id="profit-factor">0.00</div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Metrics Grid -->
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--spacing-md);">
+                        <div class="stat-card-sm">
+                            <div class="stat-label">Expectancy</div>
+                            <div class="stat-value-sm" id="expectancy">$0.00</div>
+                        </div>
+                        <div class="stat-card-sm">
+                            <div class="stat-label">Avg R:R</div>
+                            <div class="stat-value-sm" id="avg-rr">0:1</div>
+                        </div>
+                        <div class="stat-card-sm">
+                            <div class="stat-label">Sharpe Ratio</div>
+                            <div class="stat-value-sm" id="sharpe-ratio">0.00</div>
+                        </div>
+                        <div class="stat-card-sm">
+                            <div class="stat-label">Avg Win</div>
+                            <div class="stat-value-sm stat-value-positive" id="avg-win">$0.00</div>
+                        </div>
+                        <div class="stat-card-sm">
+                            <div class="stat-label">Avg Loss</div>
+                            <div class="stat-value-sm stat-value-negative" id="avg-loss">$0.00</div>
+                        </div>
+                        <div class="stat-card-sm">
+                            <div class="stat-label">Max Drawdown</div>
+                            <div class="stat-value-sm stat-value-negative" id="max-drawdown">$0.00</div>
+                        </div>
+                        <div class="stat-card-sm">
+                            <div class="stat-label">Win Streak</div>
+                            <div class="stat-value-sm" id="max-win-streak">0</div>
+                        </div>
+                        <div class="stat-card-sm">
+                            <div class="stat-label">Loss Streak</div>
+                            <div class="stat-value-sm" id="max-loss-streak">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Over Time Chart -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"
+                            style="border-left: 4px solid var(--green-primary); padding-left: var(--spacing-md);">
+                            Performance Over Time
+                        </h3>
+                    </div>
+                    <div class="chart-container" style="height: 320px;">
+                        <canvas id="performance-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOG TAB -->
+            <div id="log-content" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            Trade History (<span id="trade-count">0</span>)
+                        </h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="trade-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Symbol</th>
+                                    <th style="text-align: center;">Side</th>
+                                    <th>Strategy</th>
+                                    <th style="text-align: right;">Entry</th>
+                                    <th style="text-align: right;">Exit</th>
+                                    <th style="text-align: right;">P&L</th>
+                                    <th style="text-align: right;">ROI</th>
+                                    <th style="text-align: center;">Quality</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trades-table-body">
+                                <tr>
+                                    <td colspan="9"
+                                        style="text-align: center; padding: var(--spacing-2xl); color: var(--text-muted);">
+                                        No trades to display
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CALENDAR TAB -->
+            <div id="calendar-content" class="tab-content">
+                <div class="card">
+                    <div class="card-header"
+                        style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 class="card-title">Profit Calendar</h3>
+                        <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                            <div class="calendar-nav">
+                                <button id="prev-month-btn" class="calendar-nav-btn">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <span id="calendar-month" class="calendar-month-label"></span>
+                                <button id="next-month-btn" class="calendar-nav-btn">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="calendar-grid" class="calendar-grid"></div>
+                </div>
+            </div>
+
+            <!-- DEEP DIVE TAB -->
+            <div id="deep-dive-content" class="tab-content">
+                <!-- Breakdown Selector -->
+                <div
+                    style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-xl);">
+                    <span
+                        style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">
+                        Breakdown By:
+                    </span>
+                    <div class="analytics-tabs" style="padding: 0.25rem;">
+                        <button class="analytics-tab active" data-breakdown="Symbol"
+                            style="font-size: 0.75rem; padding: 0.5rem 1rem;">Symbol</button>
+                        <button class="analytics-tab" data-breakdown="Strategy"
+                            style="font-size: 0.75rem; padding: 0.5rem 1rem;">Strategy</button>
+                        <button class="analytics-tab" data-breakdown="Day"
+                            style="font-size: 0.75rem; padding: 0.5rem 1rem;">Day</button>
+                        <button class="analytics-tab" data-breakdown="Hour"
+                            style="font-size: 0.75rem; padding: 0.5rem 1rem;">Hour</button>
+                        <button class="analytics-tab" data-breakdown="Side"
+                            style="font-size: 0.75rem; padding: 0.5rem 1rem;">Side</button>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: var(--spacing-xl);">
+                    <!-- Breakdown Chart -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><span id="breakdown-type">Symbol</span> Performance</h3>
+                        </div>
+                        <div class="chart-container" style="height: 400px;">
+                            <canvas id="breakdown-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Breakdown Table -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Detailed Breakdown</h3>
+                        </div>
+                        <div class="table-container">
+                            <table class="trade-table">
+                                <thead>
+                                    <tr>
+                                        <th id="breakdown-header-name">Name</th>
+                                        <th style="text-align: right;">Trades</th>
+                                        <th style="text-align: right;">Win Rate</th>
+                                        <th style="text-align: right;">P&L</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="breakdown-table-body">
+                                    <tr>
+                                        <td colspan="4"
+                                            style="text-align: center; padding: var(--spacing-2xl); color: var(--text-muted);">
+                                            No data to display
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Core Scripts -->
+    <script src="constants.js"></script>
+    <script src="calculations.js"></script>
+    <script src="data-manager.js"></script>
+    <script src="analytics.js"></script>
+</body>
+
+</html>
