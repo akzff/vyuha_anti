@@ -424,18 +424,7 @@ function initializeEventListeners() {
   if (newTradeCard) {
     newTradeCard.addEventListener('click', function (e) {
       e.preventDefault();
-      if (window.tradeFormModal) {
-        window.tradeFormModal.open((trade) => {
-          console.log('New trade added:', trade);
-          // Reload UI
-          loadData();
-          renderOpenPositions();
-          renderRecentActivity();
-          renderProfitGoals();
-          renderRiskStatus();
-          initializeCharts();
-        });
-      }
+      openTradeFormModal();
     });
   }
 }
